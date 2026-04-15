@@ -78,7 +78,7 @@ def get_cnn(num_classes=3):
             self.pool = nn.AdaptiveAvgPool1d(1)
             self.fc = nn.Linear(64, num_classes)
         def forward(self, x):
-            x = x.unsqueeze(1)  # (B, 1, 128)
+            # 입력 x는 이미 (B, 1, 128) 형태임
             x = torch.relu(self.conv1(x))
             x = torch.relu(self.conv2(x))
             x = torch.relu(self.conv3(x))
@@ -98,7 +98,7 @@ def get_transformer(input_dim=1, d_model=32, nhead=4, num_layers=2, num_classes=
             self.transformer = nn.TransformerEncoder(encoder_layer, num_layers)
             self.fc = nn.Linear(d_model, num_classes)
         def forward(self, x):
-            x = x.unsqueeze(-1)  # (B, 128, 1)
+            # 입력 x는 이미 (B, 128, 1) 형태임
             x = self.input_proj(x)  # (B, 128, d_model)
             x = x + self.pos_encoding[:, :x.size(1), :]
             x = self.transformer(x)  # (B, 128, d_model)
