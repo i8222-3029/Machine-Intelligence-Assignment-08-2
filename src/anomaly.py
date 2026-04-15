@@ -61,7 +61,7 @@ def get_lstm(input_dim=1, hidden_dim=32, num_layers=1, num_classes=3):
             self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)
             self.fc = nn.Linear(hidden_dim, num_classes)
         def forward(self, x):
-            x = x.unsqueeze(-1)  # (B, 128, 1)
+            # 입력 x는 이미 (B, 128, 1) 형태임
             _, (h_n, _) = self.lstm(x)
             out = self.fc(h_n[-1])
             return out
