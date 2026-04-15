@@ -6,8 +6,9 @@ import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
 # 데이터 로드
-# motor_current_data.npz 파일이 src/ 또는 실행 디렉터리에 있어야 합니다.
-data = np.load("motor_current_data.npz")
+import os
+# motor_current_data.npz 파일이 src/ 폴더에 있다고 가정하고, 실행 위치에 상관없이 파일을 찾도록 경로 지정
+data = np.load(os.path.join(os.path.dirname(__file__), "motor_current_data.npz"))
 sequences = data["sequences"]     # (1200, 128), float32
 labels = data["labels"]           # (1200,), int64 in {0, 1, 2}
 class_names = list(data["class_names"])
